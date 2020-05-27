@@ -98,14 +98,16 @@ print(banner())
 
 # Ummmm... Still need explanation what this function does?
 def get_code(num):
-	for i in range(int(num)):
-		os.system("bash code.sh")
-		print("\n")
-	sys.exit()
-
+	try:
+		for i in range(int(num)):
+			os.system("bash code.sh")
+			print("\n")
+		sys.exit()
+	except ValueError:
+		help_menu()
+		sys.exit()
 
 if __name__ == "__main__":
-	print(len(sys.argv))
 	if '-h' in sys.argv or '--help' in sys.argv:
 		help_menu()
 		sys.exit()
