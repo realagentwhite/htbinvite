@@ -7,12 +7,13 @@ import requests
 import os, sys
 import subprocess
 import socket
+from time import sleep
 
 # Lets give a hand to the python2'ers
 try: input = raw_input
 except: pass
 
-_version_ = 0.4
+_version_ = 0.5
 
 # Give some beauty colors
 RED = '\033[1;31m'
@@ -47,13 +48,6 @@ def check_internet():
 	except Exception as error:
 		print(error)
 		return 0
-
-def generator(num):
-	try:
-		get_code(num)
-	except IndexError:
-		print(help_menu())
-		sys.exit()
 
 
 def help_menu():
@@ -98,31 +92,38 @@ print(banner())
 
 # Ummmm... Still need explanation what this function does?
 def get_code(num):
-	try:
-		for i in range(int(num)):
-			os.system("bash code.sh")
-			print("\n")
-		sys.exit()
-	except ValueError:
-		help_menu()
-		sys.exit()
+	for i in range(int(num)):
+		os.system("bash code.sh")
+		sleep(0.4)
+		print("\n")
+	sys.exit()
 
 if __name__ == "__main__":
 	if '-h' in sys.argv or '--help' in sys.argv:
 		help_menu()
 		sys.exit()
-
-	if "--no-network-connection" not in sys.argv:
-		# check internet connection
-		if check_internet() == 0:
-			print(RED + "Unable to detect Internet connection. Needed for HTB Invite Code Generator.")
-			print("We will now exit. Launch again when you got a connection.")
-			print("You can also run ptf with the --no-network-connection argument to bypass the network check." + END)
-			sys.exit()
+	try:
+		if "--no-network-connection" not in sys.argv:
+			# check internet connection
+			if check_internet() == 0:
+				print(RED + "Unable to detect Internet connection. Needed for HTB Invite Code Generator.")
+				print("We will now exit. Launch again when you got a connection.")
+				print("You can also run ptf with the --no-network-connection argument to bypass the network check." + END)
+				sys.exit()
+			else:
+				print(GREEN + "[i] Found an internet connection..." + END)
+				get_code(sys.argv[-1])
 		else:
-			print(GREEN + "[i] Found an internet connection..." + END)
-			generator(sys.argv[-1])
-	else:
-		# Grab latest update if any
-		self_update()
-		generator(sys.argv[-1])
+			# Grab latest update if any
+			self_update()
+			os.system("cls||clear")
+			print(banner())
+			get_code(sys.argv[-1])
+	except IndexError as error:
+		print(error)
+		help_menu()
+		sys.exit()
+	except ValueError as error:
+		print(error)
+		help_menu()
+		sys.exit()
