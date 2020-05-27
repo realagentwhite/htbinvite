@@ -12,7 +12,7 @@ import socket
 try: input = raw_input
 except: pass
 
-_version_ = 0.2
+_version_ = 0.4
 
 # Give some beauty colors
 RED = '\033[1;31m'
@@ -61,8 +61,8 @@ def help_menu():
 	print("-h  or  --help\t Displays this help menu")
 	print("--no-network-connection Skip the internet connection and just run")
 	print("--"*30)
-	print("Usage: python %s <number> [commands]" % sys.argv[0])
-	print("The number is how many codes you want to generate")
+	print("Usage: python %s [commands] <number>**" % sys.argv[0])
+	print("**The number is how many codes you want to generate")
 
 # Who doesn't use a banner?
 def banner():
@@ -119,8 +119,8 @@ if __name__ == "__main__":
 			sys.exit()
 		else:
 			print(GREEN + "[i] Found an internet connection..." + END)
-			generator(sys.argv[2])
+			generator(sys.argv[-1])
 	else:
 		# Grab latest update if any
 		self_update()
-		generator(sys.argv[2])
+		generator(sys.argv[-1])
