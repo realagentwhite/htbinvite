@@ -1,4 +1,4 @@
-#### HTB INVITE CODE GENERATOR
+# HTB INVITE CODE GENERATOR
 
 ### What is this?
 This is a simple python script that will generate an invite code downloaded
@@ -10,7 +10,7 @@ hack you will do on the platform but also on the actual HTB.
 So I encourage you to not use this script but rather do it yourself
 
 ### How to use it
-Just run the script like below:
+Just run the script 
 `python generate.py -h`
 to see the comands and manual.
 
