@@ -6,6 +6,7 @@ import base64
 import requests
 import os, sys
 import subprocess
+import socket
 
 # Lets give a hand to the python2'ers
 try: input = raw_input
@@ -43,7 +44,8 @@ def check_internet():
 		rhost.settimeout(3)
 		return 1
 
-	except Exception:
+	except Exception as error:
+		print(error)
 		return 0
 
 def generator(num):
