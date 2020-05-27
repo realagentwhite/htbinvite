@@ -13,7 +13,7 @@ from time import sleep
 try: input = raw_input
 except: pass
 
-_version_ = 0.5
+_version_ = 0.6
 
 # Give some beauty colors
 RED = '\033[1;31m'
@@ -55,8 +55,8 @@ def help_menu():
 	print("-h  or  --help\t Displays this help menu")
 	print("--no-network-connection Skip the internet connection and just run")
 	print("--"*30)
-	print("Usage: python %s [commands] <number>**" % sys.argv[0])
-	print("**The number is how many codes you want to generate")
+	print("Usage: python %s [commands] <number>*" % sys.argv[0])
+	print("*The number is how many codes you want to generate")
 
 # Who doesn't use a banner?
 def banner():
@@ -91,12 +91,22 @@ def banner():
 print(banner())
 
 # Ummmm... Still need explanation what this function does?
+# Thanks to Argagel (https://github.com/artagel) who got this to work.
 def get_code(num):
-	for i in range(int(num)):
-		os.system("bash code.sh")
-		sleep(0.4)
-		print("\n")
-	sys.exit()
+	try:
+		sleep(0.5)
+		print("[!] Here are your codes you requested:")
+		for i in range(int(num)):
+			#os.system("bash code.sh")
+			r = requests.post('https://www.hackthebox.eu/api/invite/generate', headers={ 
+				"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+			})
+			resp = r.json()
+			code = resp.get('data', {}).get('code', '')
+			print(YELLOW + "\t" + base64.b64decode(code).decode() + END)
+	except ValueError:
+		help_menu()
+		sys.exit()
 
 if __name__ == "__main__":
 	if '-h' in sys.argv or '--help' in sys.argv:

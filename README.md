@@ -10,7 +10,14 @@ hack you will do on the platform but also on the actual HTB.
 So I encourage you to not use this script but rather do it yourself
 
 ### How to use it
-Just run the script 
-`python generate.py -h`
-to see the comands and manual.
 
+- Help menu: 
+  `python generate.py -h`
+- Run without checkinf for internet connection:
+  `python generate.py --no-network-connection`
+- Run as normal:
+  `python generate.py <number>`
+- Run as normal without checking internet connection
+  `python generate.py --no-network-connection`
+
+Remember, the number of codes has to be at the end. Else it will delete your C:\ drive (not really, just messing with you)
