@@ -13,7 +13,7 @@ from time import sleep
 try: input = raw_input
 except: pass
 
-_version_ = 0.6
+_version_ = 0.7
 
 # Give some beauty colors
 RED = '\033[1;31m'
@@ -33,6 +33,7 @@ def self_update():
 	# try to update ourself first
 	print("Trying to update myself first.. Then starting framework.")
 	subprocess.Popen("git pull", shell=True).wait()
+	sleep(2)
 
 def check_internet():
 	"""
@@ -42,18 +43,19 @@ def check_internet():
 		print(YELLOW + "[i] Checking for an Internet connection..."+ END)
 		rhost = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		rhost.connect(('google.com', 0))
-		rhost.settimeout(3)
+		rhost.settimeout(2)
 		return 1
 
-	except Exception as error:
-		print(error)
+	except Exception:
 		return 0
 
 
 def help_menu():
 	print("Some commands:")
 	print("-h  or  --help\t Displays this help menu")
-	print("--no-network-connection Skip the internet connection and just run")
+	print("| Skip the internet connection and just run")
+	print("| --no-internet")
+	print("| --no-check-internet")
 	print("--"*30)
 	print("Usage: python %s [commands] <number>*" % sys.argv[0])
 	print("*The number is how many codes you want to generate")
@@ -88,8 +90,6 @@ def banner():
 
 	return banner
 
-print(banner())
-
 # Ummmm... Still need explanation what this function does?
 # Thanks to Argagel (https://github.com/artagel) who got this to work.
 def get_code(num):
@@ -109,21 +109,27 @@ def get_code(num):
 		sys.exit()
 
 if __name__ == "__main__":
+	os.system("cls||clear")
+	print(banner())
+
 	if '-h' in sys.argv or '--help' in sys.argv:
 		help_menu()
 		sys.exit()
 	try:
-		if "--no-network-connection" not in sys.argv:
+		if "--no-internet" not in sys.argv[1:] or "--no-check-internet" not in sys.argv[1:]:
 			# check internet connection
 			if check_internet() == 0:
-				print(RED + "Unable to detect Internet connection. Needed for HTB Invite Code Generator.")
-				print("We will now exit. Launch again when you got a connection.")
-				print("You can also run ptf with the --no-network-connection argument to bypass the network check." + END)
+				print(RED + """
+Unable to detect Internet connection. Needed for HTB Invite Code Generator.
+We will now exit. Launch again when you got a connection.
+You can also run ptf with the --no-internet or --no-check-internet\nargument to bypass the network check.
+				""" + END)
 				sys.exit()
 			else:
 				print(GREEN + "[i] Found an internet connection..." + END)
 				get_code(sys.argv[-1])
 		else:
+			print("[i] Skipping internet connection test...")
 			# Grab latest update if any
 			self_update()
 			os.system("cls||clear")
