@@ -32,6 +32,7 @@ def self_update():
 
 	# try to update ourself first
 	print("Trying to update myself first.. Then starting framework.")
+	print("Remember, if there was an update, quit the program and restart to get the latest features")
 	subprocess.Popen("git pull", shell=True).wait()
 	sleep(2)
 
@@ -127,9 +128,13 @@ You can also run ptf with the --no-internet or --no-check-internet\nargument to 
 				sys.exit()
 			else:
 				print(GREEN + "[i] Found an internet connection..." + END)
+				# Grab latest update if any
+				self_update()
+				os.system("cls||clear")
+				print(banner())
 				get_code(sys.argv[-1])
 		else:
-			print("[i] Skipping internet connection test...")
+			print("[i] Skipping internet connection test...")	
 			# Grab latest update if any
 			self_update()
 			os.system("cls||clear")
