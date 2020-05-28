@@ -13,7 +13,7 @@ from time import sleep
 try: input = raw_input
 except: pass
 
-_version_ = 0.7
+_version_ = 0.8
 
 # Give some beauty colors
 RED = '\033[1;31m'
@@ -108,6 +108,10 @@ def get_code(num):
 	except ValueError:
 		help_menu()
 		sys.exit()
+	except Exception as error:
+		print(RED+ "Ooops! Seems to be a mistake somewhere. Here is the error Jack!" + END)
+		print(error)
+		sys.exit()
 
 if __name__ == "__main__":
 	os.system("cls||clear")
@@ -117,7 +121,14 @@ if __name__ == "__main__":
 		help_menu()
 		sys.exit()
 	try:
-		if "--no-internet" not in sys.argv[1:] or "--no-check-internet" not in sys.argv[1:]:
+		if "--no-internet" in sys.argv[1:] or "--no-check-internet" in sys.argv[1:]:
+			print(YELLOW+ "\n[i] Skipping internet connection test..." + END)
+			# Grab latest update if any
+			self_update()
+			os.system("cls||clear")
+			print(banner())
+			get_code(sys.argv[-1])
+		else:
 			# check internet connection
 			if check_internet() == 0:
 				print(RED + """
@@ -133,13 +144,7 @@ You can also run ptf with the --no-internet or --no-check-internet\nargument to 
 				os.system("cls||clear")
 				print(banner())
 				get_code(sys.argv[-1])
-		else:
-			print("[i] Skipping internet connection test...")	
-			# Grab latest update if any
-			self_update()
-			os.system("cls||clear")
-			print(banner())
-			get_code(sys.argv[-1])
+
 	except IndexError as error:
 		print(error)
 		help_menu()
