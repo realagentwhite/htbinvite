@@ -13,7 +13,7 @@ from time import sleep
 try: input = raw_input
 except: pass
 
-_version_ = 0.8
+_version_ = 0.9
 
 # Give some beauty colors
 RED = '\033[1;31m'
@@ -79,7 +79,7 @@ def banner():
 	"""
 	banner += RED + """[+] Version: """ + END + YELLOW + str(_version_) + "\n"+ END
 	banner += GREEN + "\t[+] hackthebox.eu Invite Code Generator\n" + END
-	banner += GREEN + "\t[+] Author: AgentWhite (@_agentwhite_)\n" + END
+	banner += GREEN + "\t[+] Author: Th3J0k3r (@__Th3J0k3r__)\n" + END
 	banner += GREEN + "\t[+] Website: https://thegibson.xyz\n" + END
 	banner += YELLOW +"\t[+] World Designed By Technology Is A World Designed To Be Broken.\n" + END
 	banner += RED + "\t-----------------------------------------------------------------------------\n" + END
@@ -124,7 +124,8 @@ if __name__ == "__main__":
 		if "--no-internet" in sys.argv[1:] or "--no-check-internet" in sys.argv[1:]:
 			print(YELLOW+ "\n[i] Skipping internet connection test..." + END)
 			# Grab latest update if any
-			self_update()
+			#self_update()
+			sleep(1)
 			os.system("cls||clear")
 			print(banner())
 			get_code(sys.argv[-1])
